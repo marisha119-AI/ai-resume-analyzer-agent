@@ -1,0 +1,114 @@
+{
+  "name": "My workflow 2",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        0,
+        0
+      ],
+      "id": "26c9e9d3-e3a7-444e-956c-ada1c2971707",
+      "name": "When chat message received",
+      "webhookId": "6693541c-4683-413b-baee-d71230832133"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a professional Resume Analyzer. When a user shares their resume text, analyze it and provide:\n1. Overall score out of 10\n2. Strong points\n3. Areas to improve\n4. Missing keywords for AI/Tech jobs\n5. Suggestions to make it better\n\nBe specific and helpful."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "00caad47-3f99-4f42-b460-7909b1bcffaf",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama-3.3-70b-versatile",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGroq",
+      "typeVersion": 1,
+      "position": [
+        144,
+        128
+      ],
+      "id": "aec8c6e7-ca5c-4985-b98a-52be8a2e6967",
+      "name": "Groq Chat Model",
+      "credentials": {
+        "groqApi": {
+          "id": "wyOGMDwVyAoAyboU",
+          "name": "Groq account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        272,
+        176
+      ],
+      "id": "af81289f-e299-42f7-aa01-9cb75f978249",
+      "name": "Simple Memory"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Groq Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "eca82f6c-8b3c-454b-9fdd-b07a9407691e",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4a58f2b7d255897656d180c1476e8bca25a507c0d2d407fcd53a0886f5d488fa"
+  },
+  "id": "IvEbvbCSMImoaryK",
+  "tags": []
+}
